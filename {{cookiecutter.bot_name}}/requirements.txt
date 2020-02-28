@@ -1,5 +1,6 @@
 botbuilder-core>=4.7.0
 aiohttp
 httpx
+lxml
 
 coco-microsoft-bot-framework

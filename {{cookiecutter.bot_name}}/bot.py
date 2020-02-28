@@ -6,6 +6,8 @@ from botbuilder.schema import ChannelAccount
 
 from coco_microsoft_bot_framework import CoCoActivityHandler
 
+from lxml import etree
+
 from direct_line_session import DirectLineAPI
 from config import DefaultConfig
 
@@ -25,9 +27,20 @@ class MyBot(CoCoActivityHandler):
         message_id = await self.direct_line_session.send_message(
             turn_context.activity.text)
 
-        text_response = await self.direct_line_session.get_message_response(message_id)
+        response_text_with_tags = await self.direct_line_session.get_message_response(message_id)
+
+        xml_response = etree.fromstring(f"<resp>{response_text_with_tags}</resp>")
+
+        text_response = xml_response.text
+
+        triggred_comps = xml_response.xpath("//component")
 
         await turn_context.send_activity(text_response)
+
+        if len(triggred_comps) > 0:
+            await self.activate_component(turn_context, triggred_comps[0].attrib.get("id"))
+
+
 
     async def on_members_added_activity(
         self,
