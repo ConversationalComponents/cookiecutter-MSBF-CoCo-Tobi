@@ -35,8 +35,7 @@ class MyBot(CoCoActivityHandler):
         turn_context: TurnContext
     ):
         # Start Session With Watson Assistant.
-        self.direct_line_session = DirectLineAPI(
-            api_key=CONFIG.DIRECT_LINE_SECRET)
+        self.direct_line_session = DirectLineAPI(CONFIG.DIRECT_LINE_SECRET)
 
         for member_added in members_added:
             if member_added.id != turn_context.activity.recipient.id:
