@@ -21,6 +21,7 @@ Run the following command: <br>
 ``` cookiecutter  https://github.com/ConversationalComponents/cookiecutter-MSBF-CoCo-Watson.git ```
 
 Follow the instructions to configure your bot
+
 Enter your directline key to configure the connection to TOBi
 
 
