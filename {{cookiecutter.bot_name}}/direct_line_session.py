@@ -26,7 +26,7 @@ class DirectLineAPI(object):
         jsonresponse = botresponse.json()
         self._conversationid = jsonresponse['conversationId']
 
-    def send_message(self, text):
+    async def send_message(self, text):
         """Send raw text to bot framework using directline api"""
         url = '/'.join([self._base_url, 'conversations', self._conversationid, 'activities'])
         jsonpayload = {
@@ -40,11 +40,11 @@ class DirectLineAPI(object):
             return botresponse.json()["id"]
         return "error contacting bot"
 
-    def get_message_response(self, message_id):
+    async def get_message_response(self, message_id):
         """Get a response message back from the botframework using directline api"""
         url = '/'.join([self._base_url, 'conversations', self._conversationid, 'activities'])
-        botresponse = httpx.get(url, headers=self._headers,
-                                   ={'conversationId': self._conversationid})
+        botresponse = httpx.request("GET", url=url,  headers=self._headers,
+                                   json={'conversationId': self._conversationid})
         if botresponse.status_code == 200:
             jsonresponse = botresponse.json()
 
@@ -57,5 +57,4 @@ class DirectLineAPI(object):
                 return ''
 
         return "error contacting bot for response"
-
 
