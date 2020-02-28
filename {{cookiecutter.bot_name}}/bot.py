@@ -70,7 +70,6 @@ class MyBot(CoCoActivityHandler):
         for member_added in members_added:
             if member_added.id != turn_context.activity.recipient.id:
                 await turn_context.send_activity("Hello and welcome!")
-                await self.activate_component(turn_context, "namer_vp3")
 
     async def on_end_of_conversation_activity(
         self, turn_context: TurnContext
