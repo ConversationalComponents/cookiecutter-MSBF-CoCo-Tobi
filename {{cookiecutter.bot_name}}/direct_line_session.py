@@ -48,13 +48,13 @@ class DirectLineAPI(object):
         if botresponse.status_code == 200:
             jsonresponse = botresponse.json()
 
-            responses = [res['text'] for res in jsonresponse['activities']
+            responses = [res for res in jsonresponse['activities']
                          if res.get('replyToId') == message_id]
 
             if responses:
                 return responses[0]
             else:
-                return ''
+                return {"text": "Say something..."}
 
         return "error contacting bot for response"
 

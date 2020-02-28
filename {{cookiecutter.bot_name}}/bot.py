@@ -27,7 +27,9 @@ class MyBot(CoCoActivityHandler):
         message_id = await self.direct_line_session.send_message(
             turn_context.activity.text)
 
-        response_text_with_tags = await self.direct_line_session.get_message_response(message_id)
+        response = await self.direct_line_session.get_message_response(message_id)
+
+        response_text_with_tags = response.get("text", "")
 
         xml_response = etree.fromstring(f"<resp>{response_text_with_tags}</resp>")
 
